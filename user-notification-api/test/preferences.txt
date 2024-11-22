@@ -1,0 +1,28 @@
+import { Test, TestingModule } from '@nestjs/testing';
+import { PreferencesService } from './preferences.service';
+import { PreferencesController } from './preferences.controller';
+import { getModelToken } from '@nestjs/mongoose';
+import { UserPreference } from './schemas/user-preference.schema';
+
+describe('PreferencesService', () => {
+  let service: PreferencesService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [PreferencesController],
+      providers: [
+        PreferencesService,
+        {
+          provide: getModelToken(UserPreference.name),
+          useValue: {},
+        },
+      ],
+    }).compile();
+
+    service = module.get<PreferencesService>(PreferencesService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});
